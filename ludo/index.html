@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ludo Champion • Game Zone</title>
+  <meta name="description"
+    content="Play classic Ludo in your browser with 2-4 players, 3D animated dice, capture mechanics, safe star zones, and sound effects.">
+
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Ambient background glow lights -->
+  <div class="ambient-glow glow-red" aria-hidden="true"></div>
+  <div class="ambient-glow glow-yellow" aria-hidden="true"></div>
+  <div class="ambient-glow glow-blue" aria-hidden="true"></div>
+
+  <!-- Confetti canvas for victory celebration -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <div class="game-wrapper">
+    <!-- Top Navigation Header -->
+    <header class="game-header">
+      <div class="header-left">
+        <a href="../index.html" class="nav-home-btn" title="Back to Game Zone Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Home</span>
+        </a>
+        <div class="game-brand">
+          <span class="game-brand-icon">🎲</span>
+          <h1 class="game-title">Ludo<span>Champion</span></h1>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Player Count Selector -->
+        <div class="player-count-group" role="radiogroup" aria-label="Player Count">
+          <span class="ctrl-label">Players:</span>
+          <button class="player-cnt-btn active" data-players="2" title="2 Players (Red vs Yellow)">2P</button>
+          <button class="player-cnt-btn" data-players="3" title="3 Players (Red, Green, Yellow)">3P</button>
+          <button class="player-cnt-btn" data-players="4" title="4 Players (All)">4P</button>
+        </div>
+
+        <!-- Sound Toggle -->
+        <button id="sound-toggle-btn" class="icon-action-btn" title="Toggle Sound">
+          <svg id="sound-on-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="sound-off-svg" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Restart Game -->
+        <button id="restart-game-btn" class="icon-action-btn" title="Restart Match">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Area: Controls HUD + Board -->
+    <main class="main-layout">
+      <!-- Player Status Bar / HUD -->
+      <section class="turn-hud glass-panel" aria-live="polite">
+        <div class="active-player-card" id="active-player-badge">
+          <div class="player-avatar" id="active-player-avatar">
+            <span class="avatar-token"></span>
+          </div>
+          <div class="player-info">
+            <span class="turn-caption">CURRENT TURN</span>
+            <span class="player-name" id="active-player-name">Red's Turn</span>
+          </div>
+        </div>
+
+        <!-- 3D Interactive Dice Section -->
+        <div class="dice-interaction-area">
+          <div class="dice-scene" id="dice-trigger" role="button" tabindex="0" aria-label="Roll Dice">
+            <div class="cube" id="dice-cube">
+              <!-- Face 1: Front -->
+              <div class="cube-face face-1">
+                <span class="pip"></span>
+              </div>
+              <!-- Face 2: Right -->
+              <div class="cube-face face-2">
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+              <!-- Face 3: Back -->
+              <div class="cube-face face-3">
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+              <!-- Face 4: Left -->
+              <div class="cube-face face-4">
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+              <!-- Face 5: Top -->
+              <div class="cube-face face-5">
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+              <!-- Face 6: Bottom -->
+              <div class="cube-face face-6">
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+                <span class="pip"></span>
+              </div>
+            </div>
+          </div>
+          <button id="roll-button" class="btn-roll">Roll Dice</button>
+        </div>
+
+        <!-- Move Guidance / Message -->
+        <div class="turn-message-box">
+          <div id="game-status-msg" class="status-msg">Click Roll to start!</div>
+          <div id="game-bonus-badge" class="bonus-badge hidden">⭐ BONUS ROLL!</div>
+        </div>
+      </section>
+
+      <!-- Standard 15x15 Ludo Board -->
+      <section class="board-outer-container">
+        <div class="ludo-board" id="ludo-board">
+          <!-- 15x15 cells generated dynamically via script for pixel-perfect coordinates -->
+        </div>
+      </section>
+
+      <!-- Player Progress Cards (Footer HUD) -->
+      <section class="players-progress-grid">
+        <div class="p-card p-red" id="pcard-red">
+          <div class="p-header">
+            <span class="p-dot"></span>
+            <span class="p-label">RED</span>
+          </div>
+          <div class="p-tokens-status" id="pstatus-red">
+            <span class="token-mini base" id="mini-red-0" title="Token 1: In Yard">●</span>
+            <span class="token-mini base" id="mini-red-1" title="Token 2: In Yard">●</span>
+            <span class="token-mini base" id="mini-red-2" title="Token 3: In Yard">●</span>
+            <span class="token-mini base" id="mini-red-3" title="Token 4: In Yard">●</span>
+          </div>
+        </div>
+
+        <div class="p-card p-green" id="pcard-green">
+          <div class="p-header">
+            <span class="p-dot"></span>
+            <span class="p-label">GREEN</span>
+          </div>
+          <div class="p-tokens-status" id="pstatus-green">
+            <span class="token-mini base" id="mini-green-0" title="Token 1: In Yard">●</span>
+            <span class="token-mini base" id="mini-green-1" title="Token 2: In Yard">●</span>
+            <span class="token-mini base" id="mini-green-2" title="Token 3: In Yard">●</span>
+            <span class="token-mini base" id="mini-green-3" title="Token 4: In Yard">●</span>
+          </div>
+        </div>
+
+        <div class="p-card p-yellow" id="pcard-yellow">
+          <div class="p-header">
+            <span class="p-dot"></span>
+            <span class="p-label">YELLOW</span>
+          </div>
+          <div class="p-tokens-status" id="pstatus-yellow">
+            <span class="token-mini base" id="mini-yellow-0" title="Token 1: In Yard">●</span>
+            <span class="token-mini base" id="mini-yellow-1" title="Token 2: In Yard">●</span>
+            <span class="token-mini base" id="mini-yellow-2" title="Token 3: In Yard">●</span>
+            <span class="token-mini base" id="mini-yellow-3" title="Token 4: In Yard">●</span>
+          </div>
+        </div>
+
+        <div class="p-card p-blue" id="pcard-blue">
+          <div class="p-header">
+            <span class="p-dot"></span>
+            <span class="p-label">BLUE</span>
+          </div>
+          <div class="p-tokens-status" id="pstatus-blue">
+            <span class="token-mini base" id="mini-blue-0" title="Token 1: In Yard">●</span>
+            <span class="token-mini base" id="mini-blue-1" title="Token 2: In Yard">●</span>
+            <span class="token-mini base" id="mini-blue-2" title="Token 3: In Yard">●</span>
+            <span class="token-mini base" id="mini-blue-3" title="Token 4: In Yard">●</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Winner Modal Celebration -->
+  <div id="winner-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="winner-title">
+    <div class="modal-content glass-panel">
+      <div class="modal-crown">👑</div>
+      <div class="winner-trophy" id="winner-trophy-symbol">🏆</div>
+      <h2 id="winner-title" class="winner-title">RED WINS THE CHAMPIONSHIP!</h2>
+      <p id="winner-desc" class="winner-desc">All 4 tokens have conquered the board and reached home safely!</p>
+
+      <div class="modal-actions">
+        <button id="modal-play-again-btn" class="btn btn-primary">
+          <span>Play Again</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+        <a href="../index.html" class="btn btn-secondary">Game Zone Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "roxy-game-zone",
+  "version": "1.0.0",
+  "description": "Roxy Game Zone with Full-Stack MySQL Authentication System",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "game-zone",
+    "authentication",
+    "express",
+    "mysql",
+    "arcade"
+  ],
+  "author": "Shubham",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.2.0",
+    "express-session": "^1.18.0",
+    "mysql2": "^3.9.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

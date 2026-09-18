@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTic • Next-Gen Tic-Tac-Toe • Game Zone</title>
+  <meta name="description"
+    content="A futuristic, sleek, glassmorphic Tic-Tac-Toe web game with intelligent AI, particle celebration, and synthesized audio.">
+
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Ambient background lighting -->
+  <div class="ambient-glow glow-cyan" aria-hidden="true"></div>
+  <div class="ambient-glow glow-pink" aria-hidden="true"></div>
+
+  <!-- Particle canvas for celebration confetti -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <main class="app-container">
+    <!-- Header with branding and quick settings -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../index.html" class="nav-home-btn" title="Back to Game Zone Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="home-icon">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Home</span>
+        </a>
+        <div class="brand">
+          <div class="brand-icon">
+            <span class="x-mark">✕</span>
+            <span class="o-mark">◯</span>
+          </div>
+          <h1 class="brand-title">Roxy<span>Tic</span></h1>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="sound-toggle" class="icon-btn" aria-label="Toggle Sound" title="Sound: On/Off">
+          <svg id="sound-icon-on" class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="sound-icon-off" class="btn-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+        <button id="reset-game-btn" class="icon-btn" aria-label="Restart Game" title="Restart Game (R)">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Game Control Bar (Modes & Difficulty) -->
+    <section class="controls-panel glass-panel" aria-label="Game Settings">
+      <!-- Mode Toggle -->
+      <div class="segmented-control" role="group" aria-label="Game Mode">
+        <button id="mode-pvp" class="segment-btn active" data-mode="pvp">
+          <span class="mode-icon">👥</span>
+          <span>Pass & Play</span>
+        </button>
+        <button id="mode-ai" class="segment-btn" data-mode="ai">
+          <span class="mode-icon">🤖</span>
+          <span>Vs AI</span>
+        </button>
+      </div>
+
+      <!-- AI Difficulty (visible only in AI mode) -->
+      <div id="ai-difficulty-container" class="difficulty-wrapper hidden">
+        <label class="diff-label">AI Level:</label>
+        <div class="diff-chips" role="radiogroup" aria-label="AI Difficulty">
+          <button class="chip-btn" data-diff="easy" role="radio" aria-checked="false">Easy</button>
+          <button class="chip-btn" data-diff="medium" role="radio" aria-checked="false">Smart</button>
+          <button class="chip-btn active" data-diff="unbeatable" role="radio" aria-checked="true">Unbeatable</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Turn Indicator & Status -->
+    <section class="turn-section" aria-live="polite">
+      <div class="turn-pill glass-pill" id="turn-indicator">
+        <div class="turn-slider" id="turn-slider"></div>
+        <div class="turn-option turn-x active" id="turn-x-badge">
+          <span class="pill-symbol">✕</span>
+          <span class="pill-name" id="player-x-label">Player X</span>
+        </div>
+        <div class="turn-option turn-o" id="turn-o-badge">
+          <span class="pill-symbol">◯</span>
+          <span class="pill-name" id="player-o-label">Player O</span>
+        </div>
+      </div>
+      <div id="game-status-subtext" class="status-subtext">Player X's turn to move</div>
+    </section>
+
+    <!-- 3x3 Tic-Tac-Toe Game Board -->
+    <section class="board-wrapper" aria-label="Tic-Tac-Toe Board">
+      <div class="board-container glass-panel" id="board">
+        <!-- SVG for animated strike-through line -->
+        <svg id="winning-line-svg" class="winning-line-svg" viewBox="0 0 300 300">
+          <line id="winning-line" x1="0" y1="0" x2="0" y2="0" class="win-laser hidden" />
+        </svg>
+
+        <!-- 9 Interactive Cells -->
+        <button class="cell" data-index="0" aria-label="Cell 1 (Top-Left)" id="cell-0"></button>
+        <button class="cell" data-index="1" aria-label="Cell 2 (Top-Center)" id="cell-1"></button>
+        <button class="cell" data-index="2" aria-label="Cell 3 (Top-Right)" id="cell-2"></button>
+        <button class="cell" data-index="3" aria-label="Cell 4 (Middle-Left)" id="cell-3"></button>
+        <button class="cell" data-index="4" aria-label="Cell 5 (Center)" id="cell-4"></button>
+        <button class="cell" data-index="5" aria-label="Cell 6 (Middle-Right)" id="cell-5"></button>
+        <button class="cell" data-index="6" aria-label="Cell 7 (Bottom-Left)" id="cell-6"></button>
+        <button class="cell" data-index="7" aria-label="Cell 8 (Bottom-Center)" id="cell-7"></button>
+        <button class="cell" data-index="8" aria-label="Cell 9 (Bottom-Right)" id="cell-8"></button>
+      </div>
+    </section>
+
+    <!-- Scoreboard -->
+    <section class="scoreboard glass-panel" aria-label="Scoreboard">
+      <div class="score-card score-x">
+        <span class="score-label" id="score-x-label">PLAYER (X)</span>
+        <span class="score-val" id="score-x">0</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-card score-ties">
+        <span class="score-label">TIES</span>
+        <span class="score-val" id="score-ties">0</span>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-card score-o">
+        <span class="score-label" id="score-o-label">PLAYER (O)</span>
+        <span class="score-val" id="score-o">0</span>
+      </div>
+    </section>
+
+    <!-- Footer Controls (Score Reset & Keyboard Tip) -->
+    <footer class="app-footer">
+      <button id="reset-score-btn" class="text-link-btn">Reset Scores</button>
+      <div class="keyboard-tip">
+        <span class="key-tag">1</span>-<span class="key-tag">9</span> Numpad / Keys • <span class="key-tag">R</span>
+        Restart
+      </div>
+    </footer>
+  </main>
+
+  <!-- Winner / Draw Modal Overlay -->
+  <div id="result-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card glass-panel">
+      <div id="modal-badge" class="modal-status-badge">VICTORY!</div>
+      <div id="modal-avatar" class="modal-avatar">
+        <span id="modal-icon" class="modal-symbol">✕</span>
+      </div>
+      <h2 id="modal-title" class="modal-title">PLAYER X WON!</h2>
+      <p id="modal-desc" class="modal-desc">Brilliant strategic performance!</p>
+
+      <div class="modal-actions">
+        <button id="modal-play-again" class="btn btn-primary">
+          <span>Play Again</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+        <a href="../index.html" class="btn btn-ghost">Return to Game Zone</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

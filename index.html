@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Zone • Ultimate Browser Games</title>
+  <meta name="description"
+    content="Play classic and futuristic games in your browser. Choose between Ludo and Tic Tac Toe with intelligent AI, 3D dice, and sleek graphics.">
+
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Ambient background glow lights -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+  <div class="page-wrapper">
+    <!-- Header Section -->
+    <header class="portal-header">
+      <!-- Top Navigation & Auth Controls Bar -->
+      <nav class="portal-nav-bar" aria-label="Arcade Authentication Navigation">
+        <div class="nav-brand">
+          <span class="nav-brand-icon">🕹️</span>
+          <span class="nav-brand-title">ROXY ZONE</span>
+        </div>
+
+        <!-- Auth Controls Container -->
+        <div class="auth-controls" id="authControls">
+          <!-- Logged-out state -->
+          <div class="auth-guest-group" id="guestGroup">
+            <button type="button" class="auth-btn btn-signin" id="openSignInBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>
+              </svg>
+              <span>Sign In</span>
+            </button>
+            <button type="button" class="auth-btn btn-signup" id="openSignUpBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <line x1="20" y1="8" x2="20" y2="14"/>
+                <line x1="23" y1="11" x2="17" y2="11"/>
+              </svg>
+              <span>Sign Up</span>
+            </button>
+          </div>
+
+          <!-- Logged-in state (hidden initially) -->
+          <div class="auth-user-group" id="userGroup" style="display: none;">
+            <div class="user-greeting-badge" id="userBadge" title="Click to view profile">
+              <span class="avatar-glow">👤</span>
+              <span class="greeting-text">Welcome, <strong id="headerUsername" class="neon-name">Player</strong></span>
+            </div>
+            <button type="button" class="auth-btn btn-profile" id="openProfileBtn" title="View Profile">
+              <span>Profile</span>
+            </button>
+            <button type="button" class="auth-btn btn-logout" id="logoutBtn" title="Log Out">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        <span class="brand-category">SHUBHAM'S ARCADE HUB</span>
+      </div>
+      <h1 class="main-title">Roxy Game <span>Zone</span></h1>
+      <p class="tagline">Select your arena, challenge your friends, and dive into fast-paced strategic gameplay directly
+        in your browser.</p>
+    </header>
+
+    <!-- Games Showcase Grid -->
+    <main class="games-container">
+      <!-- Game 1: Ludo -->
+      <article class="game-card card-ludo">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="card-content">
+          <div class="game-badge-row">
+            <span class="badge badge-players">👥 2–4 PLAYERS</span>
+            <span class="badge badge-type">CLASSIC BOARD</span>
+          </div>
+
+          <div class="game-visual ludo-visual">
+            <div class="dice-showcase">
+              <span class="dice-icon">🎲</span>
+            </div>
+            <div class="tokens-row">
+              <span class="token-dot token-red" title="Red"></span>
+              <span class="token-dot token-green" title="Green"></span>
+              <span class="token-dot token-yellow" title="Yellow"></span>
+              <span class="token-dot token-blue" title="Blue"></span>
+            </div>
+          </div>
+
+          <div class="game-info">
+            <h2 class="game-name">Ludo</h2>
+            <p class="game-desc">
+              Experience the classic family board game. Roll the 3D dice, release tokens, knock out opponents on
+              non-safe tiles, and navigate your squad to victory!
+            </p>
+
+            <ul class="feature-pills">
+              <li>3D Animated Dice</li>
+              <li>Safe Star Zones</li>
+              <li>Token Knockouts</li>
+              <li>Pass & Play</li>
+            </ul>
+          </div>
+
+          <div class="card-footer">
+            <a href="ludo/index.html" class="play-btn btn-ludo">
+              <span>Play Now</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Game 2: Tic Tac Toe -->
+      <article class="game-card card-tictactoe">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="card-content">
+          <div class="game-badge-row">
+            <span class="badge badge-players">👤 1–2 PLAYERS</span>
+            <span class="badge badge-type">CYBER STRATEGY</span>
+          </div>
+
+          <div class="game-visual ttt-visual">
+            <div class="symbols-showcase">
+              <span class="symbol-x">✕</span>
+              <span class="symbol-divider">•</span>
+              <span class="symbol-o">◯</span>
+            </div>
+            <div class="mini-grid-preview" aria-hidden="true">
+              <span class="mg-cell has-x">✕</span>
+              <span class="mg-cell"></span>
+              <span class="mg-cell has-o">◯</span>
+              <span class="mg-cell"></span>
+              <span class="mg-cell has-x">✕</span>
+              <span class="mg-cell"></span>
+              <span class="mg-cell has-o">◯</span>
+              <span class="mg-cell"></span>
+              <span class="mg-cell has-x">✕</span>
+            </div>
+          </div>
+
+          <div class="game-info">
+            <h2 class="game-name">Tic Tac Toe</h2>
+            <p class="game-desc">
+              Futuristic neon grid combat! Challenge a friend in local pass & play or test your skills against our smart
+              & unbeatable Minimax AI engine.
+            </p>
+
+            <ul class="feature-pills">
+              <li>Unbeatable AI</li>
+              <li>Neon Cyber UI</li>
+              <li>Laser Strike Lines</li>
+              <li>Sound FX & Confetti</li>
+            </ul>
+          </div>
+
+          <div class="card-footer">
+            <a href="tic-tac-toe/index.html" class="play-btn btn-ttt">
+              <span>Play Now</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- Game 3: Chess -->
+      <article class="game-card card-chess">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="card-content">
+          <div class="game-badge-row">
+            <span class="badge badge-players">👤 1–2 PLAYERS</span>
+            <span class="badge badge-type">STRATEGY</span>
+          </div>
+
+          <div class="game-visual chess-visual">
+            <div class="chess-piece-showcase">
+              <span class="chess-icon">♘</span>
+            </div>
+            <div class="chess-grid-preview" aria-hidden="true">
+              <div class="cg-row"><span class="cg-cell light"></span><span class="cg-cell dark"></span><span
+                  class="cg-cell light"></span><span class="cg-cell dark"></span></div>
+              <div class="cg-row"><span class="cg-cell dark"></span><span class="cg-cell light"></span><span
+                  class="cg-cell dark"></span><span class="cg-cell light"></span></div>
+              <div class="cg-row"><span class="cg-cell light"></span><span class="cg-cell dark"></span><span
+                  class="cg-cell light"></span><span class="cg-cell dark"></span></div>
+            </div>
+          </div>
+
+          <div class="game-info">
+            <h2 class="game-name">Chess</h2>
+            <p class="game-desc">
+              Play classic chess against a friend or challenge an intelligent AI with multiple difficulty levels. Master
+              the board and achieve checkmate.
+            </p>
+
+            <ul class="feature-pills">
+              <li>Play vs Friend</li>
+              <li>Play vs AI</li>
+              <li>3 AI Levels</li>
+              <li>Legal Move Detection</li>
+            </ul>
+          </div>
+
+          <div class="card-footer">
+            <a href="chess/index.html" class="play-btn btn-chess">
+              <span>Play Now</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+      <!-- Game 4: Valorous Rabbit -->
+      <article class="game-card card-rabbit">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="card-content">
+          <div class="game-badge-row">
+            <span class="badge badge-players">👤 1 PLAYER</span>
+            <span class="badge badge-type">ADVENTURE</span>
+          </div>
+
+          <div class="game-visual rabbit-visual">
+            <div class="rabbit-showcase">
+              <span class="rabbit-icon">🐇</span>
+              <span class="carrot-icon">🥕</span>
+            </div>
+            <div class="rabbit-scenery" aria-hidden="true">
+              <span class="tree-left">🌲</span>
+              <span class="tree-right">🌲</span>
+              <div class="ground-line"></div>
+            </div>
+          </div>
+
+          <div class="game-info">
+            <h2 class="game-name">Valorous Rabbit</h2>
+            <p class="game-desc">
+              Guide a courageous rabbit through a dangerous adventure filled with obstacles, enemies, collectibles, and exciting challenges.
+            </p>
+
+            <ul class="feature-pills">
+              <li>Adventure</li>
+              <li>Obstacles</li>
+              <li>Enemies</li>
+              <li>Collectibles</li>
+            </ul>
+          </div>
+
+          <div class="card-footer">
+            <a href="valorous-rabbit/index.html" class="play-btn btn-rabbit">
+              <span>Play Now</span>
+              <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer">
+      <p>Copyright © 2026 SHUBHAM'S ARCADE HUB</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Modal Overlay Backdrop -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true"></div>
+
+  <!-- Sign In Modal -->
+  <div class="auth-modal" id="signInModal" role="dialog" aria-modal="true" aria-labelledby="signInTitle" hidden>
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="closeSignInBtn" aria-label="Close modal">✕</button>
+      
+      <div class="modal-header">
+        <div class="modal-badge">ARCADE ACCESS</div>
+        <h2 id="signInTitle" class="modal-title">Sign In to <span>Game Zone</span></h2>
+        <p class="modal-subtitle">Enter your credentials to continue your high-score journey.</p>
+      </div>
+
+      <form id="signInForm" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="signInIdentifier">Email or Username</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input type="text" id="signInIdentifier" name="identifier" autocomplete="username" placeholder="Username or email address" required>
+          </div>
+          <span class="error-msg" id="signInIdentifierError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signInPassword">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="signInPassword" name="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button type="button" class="toggle-password-btn" data-target="signInPassword" aria-label="Toggle password visibility">
+              <span class="eye-icon">👁️</span>
+            </button>
+          </div>
+          <span class="error-msg" id="signInPasswordError"></span>
+        </div>
+
+        <div class="form-row-between">
+          <label class="checkbox-container">
+            <input type="checkbox" id="signInRemember" name="remember_me">
+            <span class="checkmark"></span>
+            <span class="checkbox-label">Remember Me</span>
+          </label>
+        </div>
+
+        <button type="submit" class="modal-submit-btn" id="signInSubmitBtn">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-spinner" aria-hidden="true" hidden></span>
+        </button>
+
+        <p class="modal-switch-text">
+          Don't have an account? <button type="button" class="switch-link" id="switchToSignUp">Sign Up</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div class="auth-modal" id="signUpModal" role="dialog" aria-modal="true" aria-labelledby="signUpTitle" hidden>
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="closeSignUpBtn" aria-label="Close modal">✕</button>
+
+      <div class="modal-header">
+        <div class="modal-badge">NEW PLAYER</div>
+        <h2 id="signUpTitle" class="modal-title">Create <span>Account</span></h2>
+        <p class="modal-subtitle">Join the Roxy Game Zone arena and compete on the leaderboards.</p>
+      </div>
+
+      <form id="signUpForm" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="signUpFullName">Full Name</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✨</span>
+            <input type="text" id="signUpFullName" name="full_name" autocomplete="name" placeholder="e.g. Shubham Kumar" required maxlength="100">
+          </div>
+          <span class="error-msg" id="signUpFullNameError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signUpUsername">Username</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🎮</span>
+            <input type="text" id="signUpUsername" name="username" autocomplete="username" placeholder="e.g. shubham99" required minlength="3" maxlength="30">
+          </div>
+          <span class="field-hint">3–30 characters (letters, numbers, underscores)</span>
+          <span class="error-msg" id="signUpUsernameError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signUpEmail">Email Address</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input type="email" id="signUpEmail" name="email" autocomplete="email" placeholder="e.g. shubham@example.com" required>
+          </div>
+          <span class="error-msg" id="signUpEmailError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signUpPassword">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔑</span>
+            <input type="password" id="signUpPassword" name="password" autocomplete="new-password" placeholder="At least 8 characters" required>
+            <button type="button" class="toggle-password-btn" data-target="signUpPassword" aria-label="Toggle password visibility">
+              <span class="eye-icon">👁️</span>
+            </button>
+          </div>
+          <span class="field-hint">Must contain uppercase, lowercase, number, and symbol</span>
+          <span class="error-msg" id="signUpPasswordError"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="signUpConfirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🛡️</span>
+            <input type="password" id="signUpConfirmPassword" name="confirm_password" autocomplete="new-password" placeholder="Re-type your password" required>
+            <button type="button" class="toggle-password-btn" data-target="signUpConfirmPassword" aria-label="Toggle confirm password visibility">
+              <span class="eye-icon">👁️</span>
+            </button>
+          </div>
+          <span class="error-msg" id="signUpConfirmPasswordError"></span>
+        </div>
+
+        <button type="submit" class="modal-submit-btn" id="signUpSubmitBtn">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-spinner" aria-hidden="true" hidden></span>
+        </button>
+
+        <p class="modal-switch-text">
+          Already have an account? <button type="button" class="switch-link" id="switchToSignIn">Sign In</button>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Player Profile Modal -->
+  <div class="auth-modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden>
+    <div class="modal-card modal-card-sm">
+      <button type="button" class="modal-close-btn" id="closeProfileBtn" aria-label="Close modal">✕</button>
+
+      <div class="modal-header">
+        <div class="modal-badge">PLAYER PROFILE</div>
+        <h2 id="profileTitle" class="modal-title">Arcade <span>Member</span></h2>
+      </div>
+
+      <div class="profile-card-body">
+        <div class="profile-avatar-banner">
+          <div class="profile-avatar-large">🎮</div>
+          <div class="profile-meta">
+            <h3 id="profileFullName" class="profile-name">Shubham</h3>
+            <span id="profileUsername" class="profile-handle">@shubham</span>
+          </div>
+        </div>
+
+        <div class="profile-info-list">
+          <div class="profile-info-item">
+            <span class="info-label">Email Address</span>
+            <span id="profileEmail" class="info-value">user@example.com</span>
+          </div>
+          <div class="profile-info-item">
+            <span class="info-label">Account Status</span>
+            <span class="info-value status-active">● Active Player</span>
+          </div>
+          <div class="profile-info-item">
+            <span class="info-label">Joined Roxy Zone</span>
+            <span id="profileJoined" class="info-value">Today</span>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button type="button" class="auth-btn btn-logout-modal" id="modalLogoutBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+            <span>Sign Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Game Zone JavaScript -->
+  <script src="script.js"></script>
+</body>
+
+</html>
